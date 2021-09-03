@@ -12,7 +12,6 @@ parse.add_argument('--setting_file', '-s', help='setting file', default="setting
 
 args = parse.parse_args()
 
-
 # Loading setting file --> setting_data
 setting_file_name = args.setting_file
 with open(setting_file_name, 'r', encoding='utf') as fs:
@@ -24,11 +23,9 @@ with open(setting_file_name, 'r', encoding='utf') as fs:
         print("[error] The setting file's type is illegal!")
         exit()
 
-
-# Get settings 
+# Get settings
 base_path = setting_data["base_path"]
 default_time = setting_data["default_time"]
-
 
 try:
     local_time = time.strftime('%Y_%m_%d_%H%M%S', time.localtime(time.time()))
@@ -43,7 +40,6 @@ for item in items:
     tmp_item_path = os.path.join(base_path, item)
     if time.strftime("%Y-%m-%d %H:%M:%S'", time.localtime(os.stat(tmp_item_path).st_ctime)) > default_time:
         shutil.move(os.path.join(base_path, item), dst_dir)
-
 
 setting_data['default_time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 with open(setting_file_name, 'w', encoding='utf-8') as fs:
